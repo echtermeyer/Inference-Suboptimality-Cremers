@@ -285,6 +285,10 @@ def main():
 
     model = get_model(args.dataset, hps)
 
+    print(f"\nEncoder architecture:")
+    print(f"  fc1: {model.fc1.in_features} → {model.fc1.out_features}")
+    print(f"  fc2: {model.fc2.in_features} → {model.fc2.out_features}")
+
     # Load pretrained model (to get decoder weights)
     print(f"Loading pretrained model from {args.pretrained_path}...")
     pretrained_state = torch.load(args.pretrained_path, map_location="cpu")
