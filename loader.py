@@ -87,6 +87,12 @@ class Larochelle_MNIST:
                 'partial_train': mnist[0][0][:partial],
                 'partial_test': mnist[2][0][:partial],
             }[part]
+            self.labels = {
+                'train': np.concatenate((mnist[0][1], mnist[1][1])),
+                'test': mnist[2][1],
+                'partial_train': mnist[0][1][:partial],
+                'partial_test': mnist[2][1][:partial],
+            }[part]
         self.size = self.data.shape[0]
         self.batch_size = batch_size
         self._construct()
@@ -99,8 +105,9 @@ class Larochelle_MNIST:
         for i in range(self.size // self.batch_size):
             batch = self.data[self.batch_size*i:self.batch_size*(i+1)]
             batch = torch.from_numpy(batch)
-            # placeholder for second entry
-            self.batch_list.append((batch, None))
+            batch_labels = self.labels[self.batch_size*i:self.batch_size*(i+1)]
+            batch_labels = torch.from_numpy(batch_labels).long()
+            self.batch_list.append((batch, batch_labels))
 
 
 class Binarized_Omniglot:

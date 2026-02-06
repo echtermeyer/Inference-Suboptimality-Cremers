@@ -50,7 +50,7 @@ class VAE(nn.Module):
         self.fc5 = nn.Linear(200, 200)
         self.fc6 = nn.Linear(200, 784)
 
-        self.x_info_layer = nn.Linear(200, self.z_size)
+        self.x_info_layer = nn.Linear(h_s, self.z_size)
 
         if self.has_flow:
             self.q_dist = Flow(self, n_flows=self.n_flows)
